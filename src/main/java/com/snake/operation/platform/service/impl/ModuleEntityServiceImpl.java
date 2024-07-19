@@ -89,6 +89,7 @@ public class ModuleEntityServiceImpl extends ServiceImpl<ModuleEntityMapper,Modu
         BizAssert.isTrue("equalsQueries不能为空",Objects.isNull(equalsQueries));
         IPage<ModuleDTO> page = this.page(new Page<>(queryFilter.getPageNum(), queryFilter.getPageSize()),
                 Wrappers.lambdaQuery(ModuleEntity.class)
+                        .eq(ModuleEntity::getDeleted,DeletedEnum.NORMAL.getValue())
                         .eq(StrUtil.isNotBlank(equalsQueries.getModuleName()),ModuleEntity::getModuleName,equalsQueries.getModuleName())
         ).convert(item -> item.convert(ModuleDTO.class));
         return page;
