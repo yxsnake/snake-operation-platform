@@ -59,4 +59,11 @@ public class ModuleController extends BaseController {
         return success(moduleEntityService.detail(moduleId));
     }
 
+    @Operation(summary = "删除模块")
+    @GetMapping(value = "/remove")
+    public ResponseEntity<Result<Boolean>> remove(@RequestParam("moduleId") String moduleId){
+        moduleEntityService.removeByModuleId(moduleId);
+        return success(Boolean.TRUE);
+    }
+
 }

@@ -1,11 +1,8 @@
 package com.snake.operation.platform.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.snake.operation.platform.model.dto.ModuleDTO;
 import com.snake.operation.platform.model.dto.ProductDTO;
-import com.snake.operation.platform.model.form.ModuleForm;
 import com.snake.operation.platform.model.form.ProductForm;
-import com.snake.operation.platform.model.queries.ModulePageEqualsQueries;
 import com.snake.operation.platform.model.queries.ProductPageEqualsQueries;
 import com.snake.operation.platform.service.ProductEntityService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +47,7 @@ public class ProductController extends BaseController {
     }
 
     @Operation(summary = "分页查询产品列表")
-    @GetMapping(value = "/pageList")
+    @PostMapping(value = "/pageList")
     public ResponseEntity<Result<IPage<ProductDTO>>> pageList(@Validated @RequestBody QueryFilter<ProductPageEqualsQueries, BaseFuzzyQueries> queryFilter){
         return success(productEntityService.pageList(queryFilter));
     }
@@ -59,6 +56,14 @@ public class ProductController extends BaseController {
     @GetMapping(value = "/detail")
     public ResponseEntity<Result<ProductDTO>> detail(@RequestParam("productId") String productId){
         return success(productEntityService.detail(productId));
+    }
+
+
+    @Operation(summary = "删除产品")
+    @GetMapping(value = "/remove")
+    public ResponseEntity<Result<Boolean>> remove(@RequestParam("productId") String productId){
+        productEntityService.removeByProductId(productId);
+        return success(Boolean.TRUE);
     }
 
 }

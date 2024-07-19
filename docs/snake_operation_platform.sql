@@ -11,31 +11,11 @@
  Target Server Version : 50744
  File Encoding         : 65001
 
- Date: 16/07/2024 17:30:23
+ Date: 19/07/2024 14:24:12
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for module
--- ----------------------------
-DROP TABLE IF EXISTS `module`;
-CREATE TABLE `module` (
-  `module_id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '模块 ID',
-  `product_id` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '模块 ID',
-  `module_name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '模块名称',
-  `is_free` smallint(3) DEFAULT NULL COMMENT '是否免费 (1:是，0:付费)',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`module_id`),
-  UNIQUE KEY `uq_module_name` (`module_name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='模块';
-
--- ----------------------------
--- Records of module
--- ----------------------------
-BEGIN;
-COMMIT;
 
 -- ----------------------------
 -- Table structure for p_api_resource
@@ -110,6 +90,47 @@ BEGIN;
 COMMIT;
 
 -- ----------------------------
+-- Table structure for p_module
+-- ----------------------------
+DROP TABLE IF EXISTS `p_module`;
+CREATE TABLE `p_module` (
+  `module_id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '模块 ID',
+  `product_id` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '模块 ID',
+  `module_name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '模块名称',
+  `is_free` smallint(3) DEFAULT NULL COMMENT '是否免费 (1:是，0:付费)',
+  `deleted` smallint(3) DEFAULT NULL COMMENT '删除标识(0-正常,1-删除)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`module_id`),
+  UNIQUE KEY `uq_module_name` (`module_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='模块';
+
+-- ----------------------------
+-- Records of p_module
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for p_product
+-- ----------------------------
+DROP TABLE IF EXISTS `p_product`;
+CREATE TABLE `p_product` (
+  `product_id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品 ID',
+  `product_name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品名称',
+  `is_free` smallint(3) DEFAULT NULL COMMENT '是否付费(1-付费，0-免费)',
+  `deleted` smallint(3) DEFAULT NULL COMMENT '删除标识(0-正常,1-删除)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品';
+
+-- ----------------------------
+-- Records of p_product
+-- ----------------------------
+BEGIN;
+INSERT INTO `p_product` VALUES ('1814160710960275458', '基础设施产品线', 0, NULL, '2024-07-19 12:49:54');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for p_role
 -- ----------------------------
 DROP TABLE IF EXISTS `p_role`;
@@ -158,25 +179,6 @@ CREATE TABLE `p_tenant` (
 
 -- ----------------------------
 -- Records of p_tenant
--- ----------------------------
-BEGIN;
-COMMIT;
-
--- ----------------------------
--- Table structure for product
--- ----------------------------
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE `product` (
-  `product_id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品 ID',
-  `product_name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品名称',
-  `is_free` smallint(3) DEFAULT NULL COMMENT '是否付费(1-付费，0-免费)',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`product_id`),
-  UNIQUE KEY `uq_product_name` (`product_name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品';
-
--- ----------------------------
--- Records of product
 -- ----------------------------
 BEGIN;
 COMMIT;

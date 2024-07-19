@@ -2,12 +2,21 @@ package com.snake.operation.platform.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.snake.operation.platform.mapper.MenuEntityMapper;
+import com.snake.operation.platform.model.dto.MenuDTO;
 import com.snake.operation.platform.model.entity.MenuEntity;
 import com.snake.operation.platform.model.form.MenuForm;
+import com.snake.operation.platform.model.form.SyncTenantMenuForm;
+import com.snake.operation.platform.model.queries.MenuPageEqualsQueries;
 import com.snake.operation.platform.service.MenuEntityService;
+import io.github.yxsnake.pisces.web.core.base.BaseFuzzyQueries;
+import io.github.yxsnake.pisces.web.core.base.QueryFilter;
+import io.github.yxsnake.pisces.web.core.enums.DeletedEnum;
 import lombok.extern.slf4j.Slf4j;
 import io.github.yxsnake.pisces.web.core.utils.BizAssert;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +40,7 @@ public class MenuEntityServiceImpl extends ServiceImpl<MenuEntityMapper, MenuEnt
         String menuId = IdWorker.getIdStr();
         MenuEntity menuEntity = form.convert(MenuEntity.class);
         menuEntity.setPlatformResourceId(menuId);
+        menuEntity.setDeleted(DeletedEnum.NORMAL.getValue());
         String parentId = form.getParentId();
 
         if(StrUtil.isBlank(parentId)){
@@ -50,7 +60,11 @@ public class MenuEntityServiceImpl extends ServiceImpl<MenuEntityMapper, MenuEnt
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean modify(MenuForm form) {
-        MenuEntity menuEntity = this.getBaseMapper().selectById(form.getPlatformResourceId());
+        MenuEntity menuEntity = this.lambdaQuery()
+                .eq(MenuEntity::getPlatformResourceId,form.getPlatformResourceId())
+                .eq(MenuEntity::getDeleted,DeletedEnum.NORMAL.getValue())
+                .list()
+                .stream().findFirst().orElse(null);
         BizAssert.isTrue("菜单不存在",Objects.isNull(menuEntity));
         String parentId = menuEntity.getParentId();
         BeanUtils.copyProperties(form,menuEntity);
@@ -60,8 +74,31 @@ public class MenuEntityServiceImpl extends ServiceImpl<MenuEntityMapper, MenuEnt
         return Boolean.TRUE;
     }
 
+
     @Override
-    public Boolean syncTenant(String tenantId) {
+    public void removeByPlatformMenuId(String platformMenuId) {
+        MenuEntity menuEntity = this.lambdaQuery().eq(MenuEntity::getDeleted, DeletedEnum.NORMAL.getValue())
+                .eq(MenuEntity::getPlatformResourceId, platformMenuId).list().stream().findFirst().orElse(null);
+        menuEntity.setDeleted(DeletedEnum.DEL.getValue());
+        this.getBaseMapper().updateById(menuEntity);
+    }
+
+    @Override
+    public IPage<MenuDTO> pageList(QueryFilter<MenuPageEqualsQueries, BaseFuzzyQueries> queryFilter) {
+        BizAssert.isTrue("请求参数不能为空",Objects.isNull(queryFilter));
+        MenuPageEqualsQueries equalsQueries = queryFilter.getEqualsQueries();
+        BizAssert.isTrue("equalsQueries参数不能为空",Objects.isNull(equalsQueries));
+        IPage<MenuDTO> page = this.page(new Page<>(queryFilter.getPageNum(), queryFilter.getPageSize()),
+                Wrappers.lambdaQuery(MenuEntity.class)
+                        .eq(MenuEntity::getDeleted, DeletedEnum.NORMAL.getValue())
+                        .like(StrUtil.isNotBlank(equalsQueries.getMenuName()), MenuEntity::getName, equalsQueries.getMenuName())
+        ).convert(item -> item.convert(MenuDTO.class));
+        return page;
+    }
+
+    @Override
+    public Boolean syncTenant(SyncTenantMenuForm form) {
         return null;
     }
+
 }

@@ -3,7 +3,10 @@ package com.snake.operation.platform.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.github.yxsnake.pisces.web.core.converter.Convert;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author: snake
@@ -13,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName(value = "p_menu")
-public class MenuEntity {
+public class MenuEntity implements Convert, Serializable {
 
     public final static String ROOT = "0";
 

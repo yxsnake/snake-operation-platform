@@ -23,4 +23,6 @@ public interface ModuleEntityService extends IService<ModuleEntity> {
     IPage<ModuleDTO> pageList(QueryFilter<ModulePageEqualsQueries, BaseFuzzyQueries> queryFilter);
 
     ModuleDTO detail(String moduleId);
+
+    void removeByModuleId(String moduleId);
 }

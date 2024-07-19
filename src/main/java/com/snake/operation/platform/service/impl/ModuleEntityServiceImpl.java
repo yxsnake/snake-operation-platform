@@ -1,19 +1,24 @@
 package com.snake.operation.platform.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.snake.operation.platform.mapper.MenuEntityMapper;
 import com.snake.operation.platform.mapper.ModuleEntityMapper;
 import com.snake.operation.platform.model.dto.ModuleDTO;
+import com.snake.operation.platform.model.entity.MenuEntity;
 import com.snake.operation.platform.model.entity.ModuleEntity;
 import com.snake.operation.platform.model.entity.ProductEntity;
 import com.snake.operation.platform.model.form.ModuleForm;
 import com.snake.operation.platform.model.queries.ModulePageEqualsQueries;
 import com.snake.operation.platform.service.ModuleEntityService;
 import com.snake.operation.platform.service.ProductEntityService;
+import io.github.yxsnake.pisces.web.core.enums.DeletedEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import io.github.yxsnake.pisces.web.core.base.QueryFilter;
@@ -23,6 +28,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -38,12 +44,15 @@ public class ModuleEntityServiceImpl extends ServiceImpl<ModuleEntityMapper,Modu
 
     private final ProductEntityService productEntityService;
 
+    private final MenuEntityMapper menuEntityMapper;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(ModuleForm form) {
         ModuleEntity moduleEntity = form.convert(ModuleEntity.class);
         String moduleId = IdWorker.getIdStr();
         moduleEntity.setModuleId(moduleId);
+        moduleEntity.setDeleted(DeletedEnum.NORMAL.getValue());
         // 校验产品是否存在
         ProductEntity productEntity = productEntityService.getBaseMapper().selectById(form.getProductId());
         BizAssert.isTrue("模块所属产品不存在", Objects.isNull(productEntity));
@@ -51,6 +60,7 @@ public class ModuleEntityServiceImpl extends ServiceImpl<ModuleEntityMapper,Modu
         // 校验模块名称是否已存在
         int size = this.lambdaQuery().eq(ModuleEntity::getModuleName, form.getModuleName()).list().size();
         BizAssert.isTrue("模块名称已存在",size>0);
+        moduleEntity.setCreateTime(DateUtil.date());
         this.save(moduleEntity);
     }
 
@@ -91,5 +101,20 @@ public class ModuleEntityServiceImpl extends ServiceImpl<ModuleEntityMapper,Modu
             return null;
         }
         return moduleEntity.convert(ModuleDTO.class);
+    }
+
+    @Override
+    public void removeByModuleId(String moduleId) {
+        ModuleEntity moduleEntity = this.getBaseMapper().selectById(moduleId);
+        BizAssert.isTrue("模块不存在", Objects.isNull(moduleEntity));
+        // 查询模块是否关联了菜单
+        List<MenuEntity> menuEntities = menuEntityMapper.selectList(
+                Wrappers.lambdaQuery(MenuEntity.class)
+                        .eq(MenuEntity::getDeleted,DeletedEnum.NORMAL.getValue())
+                        .eq(MenuEntity::getModuleId, moduleId)
+        );
+        BizAssert.isTrue("当前模块已关联菜单不允许删除", CollUtil.isNotEmpty(menuEntities));
+        moduleEntity.setDeleted(DeletedEnum.DEL.getValue());
+        this.getBaseMapper().updateById(moduleEntity);
     }
 }

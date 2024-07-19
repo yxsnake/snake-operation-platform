@@ -7,6 +7,7 @@ import lombok.Data;
 import io.github.yxsnake.pisces.web.core.converter.Convert;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author: snake
@@ -15,7 +16,7 @@ import java.io.Serializable;
  * @version: 1.0
  */
 @Data
-@TableName(value = "module")
+@TableName(value = "p_module")
 public class ModuleEntity implements Convert, Serializable {
 
     /**
@@ -35,8 +36,10 @@ public class ModuleEntity implements Convert, Serializable {
      * 是否免费 (1:是，0:付费)
      */
     private Integer isFree;
+
+    private Integer deleted;
     /**
      * 创建时间
      */
-    private String createTime;
+    private Date createTime;
 }

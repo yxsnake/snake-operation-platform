@@ -25,4 +25,6 @@ public interface ProductEntityService extends IService<ProductEntity> {
     IPage<ProductDTO> pageList(QueryFilter<ProductPageEqualsQueries, BaseFuzzyQueries> queryFilter);
 
     ProductDTO detail(String productId);
+
+    void removeByProductId(String productId);
 }

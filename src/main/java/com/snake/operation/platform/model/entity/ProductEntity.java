@@ -3,8 +3,10 @@ package com.snake.operation.platform.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.github.yxsnake.pisces.web.core.converter.Convert;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,8 +16,8 @@ import java.util.Date;
  * @version: 1.0
  */
 @Data
-@TableName(value = "product")
-public class ProductEntity {
+@TableName(value = "p_product")
+public class ProductEntity implements Convert, Serializable {
 
     /**
      * 产品 ID
@@ -31,9 +33,16 @@ public class ProductEntity {
      */
     private Integer isFree;
     /**
+     * 删除标识
+     */
+    private Integer deleted;
+
+    /**
      * 创建时间
      */
     private Date createTime;
+
+
 
 
 }
