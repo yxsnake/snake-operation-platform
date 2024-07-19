@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("tenant_resource")
+@TableName("p_tenant_resource")
 public class TenantResourceEntity {
 
     private String id;
