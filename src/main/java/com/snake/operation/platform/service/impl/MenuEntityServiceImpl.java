@@ -17,6 +17,7 @@ import com.snake.operation.platform.service.MenuEntityService;
 import io.github.yxsnake.pisces.web.core.base.BaseFuzzyQueries;
 import io.github.yxsnake.pisces.web.core.base.QueryFilter;
 import io.github.yxsnake.pisces.web.core.enums.DeletedEnum;
+import io.github.yxsnake.pisces.web.core.enums.DisabledEnum;
 import lombok.extern.slf4j.Slf4j;
 import io.github.yxsnake.pisces.web.core.utils.BizAssert;
 import org.springframework.beans.BeanUtils;
@@ -41,6 +42,7 @@ public class MenuEntityServiceImpl extends ServiceImpl<MenuEntityMapper, MenuEnt
         MenuEntity menuEntity = form.convert(MenuEntity.class);
         menuEntity.setPlatformResourceId(menuId);
         menuEntity.setDeleted(DeletedEnum.NORMAL.getValue());
+        menuEntity.setDisabled(DisabledEnum.NORMAL.getValue());
         String parentId = form.getParentId();
 
         if(StrUtil.isBlank(parentId)){
@@ -53,6 +55,17 @@ public class MenuEntityServiceImpl extends ServiceImpl<MenuEntityMapper, MenuEnt
             BizAssert.isTrue("上级菜单不存在", Objects.isNull(parentMenu));
         }
         menuEntity.setSort(DateUtil.date().getTime());
+        // 校验菜单权限是否重复
+        if(StrUtil.isNotBlank(form.getPerm())){
+            int size = this.lambdaQuery().eq(MenuEntity::getDeleted, DeletedEnum.NORMAL.getValue())
+                    .eq(MenuEntity::getPerm, form.getPerm()).list().size();
+            BizAssert.isTrue("权限标识已存在,请检查",size>0);
+        }
+        // 菜单名称是否重复
+        int size = this.lambdaQuery().eq(MenuEntity::getDeleted, DeletedEnum.NORMAL.getValue())
+                .eq(MenuEntity::getName, form.getName()).list().size();
+        BizAssert.isTrue("菜单名称已存在,请检查",size>0);
+
         this.save(menuEntity);
         return Boolean.TRUE;
     }

@@ -16,9 +16,9 @@ public class TenantAuditForm {
     @Schema(name = "租户唯一标识 ")
     private String tenantId;
 
-    @Schema(name = "审核结论 (0-拒绝,1-通过)")
-    private Integer auditResult;
+    @Schema(name = "审核结论 (0-待审核同步，1-通过 , 2-驳回)")
+    private Integer auditStatus;
 
-    @Schema(name = "审核意见 (0-拒绝,1-通过)")
+    @Schema(name = "审核意见")
     private String auditRemark;
 }

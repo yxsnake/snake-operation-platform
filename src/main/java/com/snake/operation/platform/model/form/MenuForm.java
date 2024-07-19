@@ -2,6 +2,7 @@ package com.snake.operation.platform.model.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import io.github.yxsnake.pisces.web.core.converter.Convert;
 
@@ -25,7 +26,7 @@ public class MenuForm implements Convert, Serializable {
     private String parentId;
 
     @Schema(name = "资源类型")
-    @NotBlank(message = "资源类型不能为空",groups = {Create.class,Modify.class})
+    @NotNull(message = "资源类型不能为空",groups = {Create.class,Modify.class})
     private Integer resourceType;
 
     @Schema(name = "资源名称")

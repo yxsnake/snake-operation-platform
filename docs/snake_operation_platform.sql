@@ -11,7 +11,7 @@
  Target Server Version : 50744
  File Encoding         : 65001
 
- Date: 19/07/2024 14:24:12
+ Date: 19/07/2024 17:09:06
 */
 
 SET NAMES utf8mb4;
@@ -65,7 +65,7 @@ CREATE TABLE `p_menu` (
   `redirect` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '跳转路径',
   `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '菜单图标',
   `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
-  `sort` int(10) DEFAULT NULL COMMENT '排序',
+  `sort` bigint(30) DEFAULT NULL COMMENT '排序',
   `disabled` smallint(3) DEFAULT NULL COMMENT '是否禁用（0-否，1-是）',
   `deleted` smallint(3) DEFAULT NULL COMMENT '是否删除（0-否，1-是）',
   `level` smallint(3) DEFAULT NULL COMMENT '层级（0～5， 最多支持 5 层）',
@@ -87,6 +87,12 @@ CREATE TABLE `p_menu` (
 -- Records of p_menu
 -- ----------------------------
 BEGIN;
+INSERT INTO `p_menu` VALUES ('1814193437470113794', '0', 0, '系统管理', '/system', 'SystemManage', '', '', '1', '', 1721372396235, 0, 0, 1, '1814185517076529154', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('1814194144076120065', '1814193437470113794', 1, '菜单管理', '/menu/list', 'MenuManage', 'menu:list', '', '1', '', 1721372564719, 0, 0, NULL, '1814185517076529154', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('1814194288012050433', '1814193437470113794', 1, '角色管理', '/role/list', 'RoleManage', 'role:list', '', '1', '', 1721372599029, 0, 0, NULL, '1814185517076529154', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('1814196049762336769', '1814193437470113794', 1, '员工管理', '/emp/list', 'EmpMange', 'emp:list', '', '1', '', 1721373019063, 0, 0, NULL, '1814185517076529154', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('1814196118263709698', '1814193437470113794', 1, '组织架构管理', '/org/list', 'OrgMange', 'org:list', '', '1', '', 1721373035392, 0, 0, NULL, '1814185517076529154', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('1814196331766366210', '1814193437470113794', 1, '会员管理', '/member/list', 'MemberMange', 'member:list', '', '1', '', 1721373086304, 0, 0, NULL, '1814185517076529154', NULL, NULL, NULL, NULL, NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -108,6 +114,7 @@ CREATE TABLE `p_module` (
 -- Records of p_module
 -- ----------------------------
 BEGIN;
+INSERT INTO `p_module` VALUES ('1814185517076529154', '1814184809824600066', '系统基础设施模块', 0, 0, '2024-07-19 14:28:44');
 COMMIT;
 
 -- ----------------------------
@@ -127,7 +134,7 @@ CREATE TABLE `p_product` (
 -- Records of p_product
 -- ----------------------------
 BEGIN;
-INSERT INTO `p_product` VALUES ('1814160710960275458', '基础设施产品线', 0, NULL, '2024-07-19 12:49:54');
+INSERT INTO `p_product` VALUES ('1814184809824600066', '基础设施产品线', 0, 0, '2024-07-19 14:25:39');
 COMMIT;
 
 -- ----------------------------
@@ -170,6 +177,7 @@ CREATE TABLE `p_tenant` (
   `phone` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
   `supper_account` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '租户超级管理员账号',
   `supper_password` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '租户超级管理员密码',
+  `deleted` smallint(3) DEFAULT '0' COMMENT '删除标识(0-正常,1-删除)',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`tenant_id`),
@@ -181,6 +189,7 @@ CREATE TABLE `p_tenant` (
 -- Records of p_tenant
 -- ----------------------------
 BEGIN;
+INSERT INTO `p_tenant` VALUES ('1814224657935519745', '北京银河创想信息技术有限公司', '银河创想', '张三', 'zhangsan@163.com', '18516908635', '20245459351119', '18516908635', 0, '2024-07-19 17:04:02', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -219,6 +228,12 @@ CREATE TABLE `tenant_resource` (
 -- Records of tenant_resource
 -- ----------------------------
 BEGIN;
+INSERT INTO `tenant_resource` VALUES ('1814224750113738754', '1814224657935519745', '1814184809824600066', '1814185517076529154', '1814193437470113794');
+INSERT INTO `tenant_resource` VALUES ('1814224769709527041', '1814224657935519745', '1814184809824600066', '1814185517076529154', '1814194144076120065');
+INSERT INTO `tenant_resource` VALUES ('1814224769709527042', '1814224657935519745', '1814184809824600066', '1814185517076529154', '1814194288012050433');
+INSERT INTO `tenant_resource` VALUES ('1814224769709527043', '1814224657935519745', '1814184809824600066', '1814185517076529154', '1814196049762336769');
+INSERT INTO `tenant_resource` VALUES ('1814224769709527044', '1814224657935519745', '1814184809824600066', '1814185517076529154', '1814196118263709698');
+INSERT INTO `tenant_resource` VALUES ('1814224769709527045', '1814224657935519745', '1814184809824600066', '1814185517076529154', '1814196331766366210');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -3,10 +3,12 @@ package com.snake.operation.platform.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.github.yxsnake.pisces.web.core.converter.Convert;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -19,8 +21,8 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("tenant")
-public class TenantEntity {
+@TableName("p_tenant")
+public class TenantEntity implements Convert, Serializable {
 
     @TableId(type = IdType.NONE)
     private String tenantId;
@@ -38,6 +40,12 @@ public class TenantEntity {
     private String supperAccount;
 
     private String supperPassword;
+
+    private Integer auditStatus;
+
+    private String auditRemark;
+
+    private Integer deleted;
 
     private Date createTime;
 

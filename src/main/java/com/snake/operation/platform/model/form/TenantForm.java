@@ -2,9 +2,9 @@ package com.snake.operation.platform.model.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import io.github.yxsnake.pisces.web.core.converter.Convert;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -43,7 +43,7 @@ public class TenantForm implements Convert, Serializable {
     private String phone;
 
     @Schema(name = "购买的模块")
-    @NotBlank(message = "购买的模块不能为空",groups = {Create.class,Modify.class})
+    @NotEmpty(message = "购买的模块不能为空",groups = {Create.class,Modify.class})
     private List<String> moduleIds;
 
     public interface Create{

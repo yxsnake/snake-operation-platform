@@ -30,12 +30,4 @@ public enum FlagFreeEnum implements IBaseEnum<Integer> {
             return item.getValue().equals(value);
         }).findFirst().orElse(null);
     }
-
-    public Integer getValue() {
-        return this.value;
-    }
-
-    public String getLabel() {
-        return this.label;
-    }
 }
