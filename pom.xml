@@ -80,7 +80,7 @@
         </profile>
     </profiles>
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>snake-operation-platform-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
