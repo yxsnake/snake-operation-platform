@@ -2,6 +2,7 @@ package com.snake.operation.platform.model.dto;
 
 import lombok.Data;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,8 +20,8 @@ public class SysRouterMetaDTO {
 
     private Integer rank;
 
-    private List<String> roles;
+    private Collection<String> roles;
 
-    private List<String> auths;
+    private Collection<String> auths;
 
 }

@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Lists;
 import com.snake.operation.platform.model.dto.SysRouteDTO;
+import com.snake.operation.platform.model.dto.SysRouterMetaDTO;
 import com.snake.operation.platform.model.entity.SysMenu;
 import com.snake.operation.platform.model.entity.SysRole;
 import com.snake.operation.platform.model.entity.SysUserRole;
@@ -15,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -41,13 +44,33 @@ public class SysRouteServiceImpl implements SysRouteService {
         if(CollUtil.isEmpty(menus)){
             return routes;
         }
-//        // 查询用户
-//        List<SysRole> roles = sysUserRoleService.getRoleListByUserId(userId);
-//        menus.stream().forEach(menu->{
-//            routes.add(menu.convert(SysRouteDTO.class));
-//        });
-//        List<SysRouteDTO> treeNodes = streamToTree(routes,SysMenu.ROOT);
-        return null;
+        List<String> menuIds = menus.stream().map(SysMenu::getMenuId).collect(Collectors.toList());
+
+        // 基于菜单查询 查询菜单页面拥有的按钮权限
+        Map<String, Set<String>> btnPermsMap = sysMenuService.getButtonPermsMap(menuIds);
+        // 基于菜单查询 分配的角色
+        Map<String, Set<String>> menuRolesMap = sysMenuService.getMenuRolesMap(menuIds);
+
+        menus.stream().forEach(menu->{
+            SysRouteDTO sysRouteDTO = new SysRouteDTO();
+            String menuId = menu.getMenuId();
+            sysRouteDTO.setId(menuId);
+            sysRouteDTO.setParentId(menu.getParentId());
+            sysRouteDTO.setPath(menu.getPath());
+            sysRouteDTO.setName(menu.getComponentName());
+            SysRouterMetaDTO metaDTO = new SysRouterMetaDTO();
+            Set<String> auths = btnPermsMap.get(menuId);
+            if(CollUtil.isNotEmpty(auths)){
+                metaDTO.setAuths(auths);
+            }
+            Set<String> roles = menuRolesMap.get(menuId);
+            if(CollUtil.isNotEmpty(roles)){
+                metaDTO.setRoles(roles);
+            }
+            sysRouteDTO.setMeta(metaDTO);
+        });
+        List<SysRouteDTO> treeNodes = streamToTree(routes,SysMenu.ROOT);
+        return treeNodes;
     }
 
     private List<SysRouteDTO> streamToTree(List<SysRouteDTO> routes, String parentId) {
