@@ -58,6 +58,8 @@ public class LoginServiceImpl implements LoginService {
 
         long tokenTimeout = StpUtil.getTokenTimeout() * 1000;
         long timeout = DateUtil.date().getTime() + tokenTimeout;
+        log.info("剩余有效时间：{}",tokenTimeout);
+        log.info("超时时间：{}",timeout);
         Date expires = new Date(timeout);
 
         LoginDTO loginDTO = LoginDTO.builder().accessToken(tokenValue).expires(expires).build();
