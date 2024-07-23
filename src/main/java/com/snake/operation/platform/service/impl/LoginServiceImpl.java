@@ -1,8 +1,8 @@
 package com.snake.operation.platform.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.date.DateUtil;
 import com.snake.operation.platform.model.dto.LoginDTO;
-import com.snake.operation.platform.model.dto.SysUserDTO;
 import com.snake.operation.platform.model.entity.SysUser;
 import com.snake.operation.platform.model.enums.SysUserStatusEnum;
 import com.snake.operation.platform.model.form.LoginForm;
@@ -11,8 +11,10 @@ import com.snake.operation.platform.service.SysUserService;
 import io.github.yxsnake.pisces.web.core.utils.BizAssert;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Slf4j
@@ -33,9 +35,12 @@ public class LoginServiceImpl implements LoginService {
         StpUtil.login(sysUser.getUserId());
         String token = StpUtil.getTokenValue();
         LoginDTO loginDTO = LoginDTO.builder()
-                .token(token)
-                .userInfo(sysUser.convert(SysUserDTO.class))
+                .accessToken(token)
                 .build();
+        BeanUtils.copyProperties(sysUser,loginDTO);
+        long tokenTimeout = StpUtil.getTokenTimeout();
+        Date expires = DateUtil.date(tokenTimeout);
+        loginDTO.setExpires(expires);
         return loginDTO;
     }
 }
