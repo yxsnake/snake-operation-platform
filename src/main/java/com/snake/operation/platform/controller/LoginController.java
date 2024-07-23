@@ -2,6 +2,7 @@ package com.snake.operation.platform.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.snake.operation.platform.model.dto.LoginDTO;
+import com.snake.operation.platform.model.entity.SysUser;
 import com.snake.operation.platform.model.form.LoginForm;
 import com.snake.operation.platform.service.LoginService;
 import io.github.yxsnake.pisces.web.core.base.Result;
@@ -40,6 +41,12 @@ public class LoginController extends BaseController {
     public ResponseEntity<Result<Boolean>> logout(){
         StpUtil.logout(StpUtil.getLoginId());
         return success(Boolean.TRUE);
+    }
+
+
+    @PostMapping(value = "/refresh-token")
+    public ResponseEntity<Result<LoginDTO>> refreshToken(){
+        return success(loginService.refreshToken());
     }
 
 

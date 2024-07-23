@@ -38,9 +38,31 @@ public class LoginServiceImpl implements LoginService {
                 .accessToken(token)
                 .build();
         BeanUtils.copyProperties(sysUser,loginDTO);
-        long tokenTimeout = StpUtil.getTokenTimeout();
-        Date expires = DateUtil.date(tokenTimeout);
+
+
+        long tokenTimeout = StpUtil.getTokenTimeout() * 1000;
+        long timeout = DateUtil.date().getTime() + tokenTimeout;
+        Date expires = new Date(timeout);
+        log.info("剩余有效时间：{}",tokenTimeout);
+        log.info("超时时间：{}",timeout);
         loginDTO.setExpires(expires);
+        return loginDTO;
+    }
+
+    @Override
+    public LoginDTO refreshToken() {
+        StpUtil.checkActiveTimeout();
+        StpUtil.updateLastActiveToNow();
+        String tokenValue = StpUtil.getTokenValue();
+        Object loginId = StpUtil.getLoginId();
+
+        long tokenTimeout = StpUtil.getTokenTimeout() * 1000;
+        long timeout = DateUtil.date().getTime() + tokenTimeout;
+        Date expires = new Date(timeout);
+
+        LoginDTO loginDTO = LoginDTO.builder().accessToken(tokenValue).expires(expires).build();
+        SysUser sysUser = sysUserService.lambdaQuery().eq(SysUser::getUserId,String.valueOf(loginId)).list().stream().findFirst().orElse(null);
+        BeanUtils.copyProperties(sysUser,loginDTO);
         return loginDTO;
     }
 }

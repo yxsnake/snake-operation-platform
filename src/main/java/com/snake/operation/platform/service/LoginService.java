@@ -7,4 +7,6 @@ public interface LoginService {
 
 
     LoginDTO login(LoginForm form);
+
+    LoginDTO refreshToken();
 }
