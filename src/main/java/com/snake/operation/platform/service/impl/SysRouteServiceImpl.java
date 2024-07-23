@@ -68,6 +68,7 @@ public class SysRouteServiceImpl implements SysRouteService {
                 metaDTO.setRoles(roles);
             }
             sysRouteDTO.setMeta(metaDTO);
+            routes.add(sysRouteDTO);
         });
         List<SysRouteDTO> treeNodes = streamToTree(routes,SysMenu.ROOT);
         return treeNodes;

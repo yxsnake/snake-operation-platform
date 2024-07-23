@@ -1,5 +1,6 @@
 package com.snake.operation.platform.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.Collection;
@@ -20,8 +21,10 @@ public class SysRouterMetaDTO {
 
     private Integer rank;
 
+    @JsonIgnore
     private Collection<String> roles;
 
+    @JsonIgnore
     private Collection<String> auths;
 
 }
