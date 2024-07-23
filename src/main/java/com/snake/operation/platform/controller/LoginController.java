@@ -2,8 +2,10 @@ package com.snake.operation.platform.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.snake.operation.platform.model.dto.LoginDTO;
+import com.snake.operation.platform.model.dto.RefreshTokenDTO;
 import com.snake.operation.platform.model.entity.SysUser;
 import com.snake.operation.platform.model.form.LoginForm;
+import com.snake.operation.platform.model.form.RefreshTokenForm;
 import com.snake.operation.platform.service.LoginService;
 import io.github.yxsnake.pisces.web.core.base.Result;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,8 +47,8 @@ public class LoginController extends BaseController {
 
 
     @PostMapping(value = "/refresh-token")
-    public ResponseEntity<Result<LoginDTO>> refreshToken(){
-        return success(loginService.refreshToken());
+    public ResponseEntity<Result<RefreshTokenDTO>> refreshToken(@RequestBody RefreshTokenForm form){
+        return success(loginService.refreshToken(form));
     }
 
 

@@ -2,12 +2,16 @@ package com.snake.operation.platform.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.snake.operation.platform.model.dto.LoginDTO;
+import com.snake.operation.platform.model.dto.RefreshTokenDTO;
 import com.snake.operation.platform.model.entity.SysUser;
 import com.snake.operation.platform.model.enums.SysUserStatusEnum;
 import com.snake.operation.platform.model.form.LoginForm;
+import com.snake.operation.platform.model.form.RefreshTokenForm;
 import com.snake.operation.platform.service.LoginService;
 import com.snake.operation.platform.service.SysUserService;
+import com.snake.operation.platform.utils.RefreshTokenUtils;
 import io.github.yxsnake.pisces.web.core.utils.BizAssert;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,32 +43,36 @@ public class LoginServiceImpl implements LoginService {
                 .build();
         BeanUtils.copyProperties(sysUser,loginDTO);
 
+        String refreshToken = RefreshTokenUtils.generateRefreshToken();
+
+        RefreshTokenUtils.setRefreshToken(refreshToken,sysUser.getUserId());
 
         long tokenTimeout = StpUtil.getTokenTimeout() * 1000;
-        long timeout = DateUtil.date().getTime() + tokenTimeout;
-        Date expires = new Date(timeout);
-        log.info("剩余有效时间：{}",tokenTimeout);
-        log.info("超时时间：{}",timeout);
-        loginDTO.setExpires(expires);
+        long expiresNumber = DateUtil.date().getTime() + tokenTimeout;
+        log.info("超时时间：{}",expiresNumber);
+        loginDTO.setExpires(new Date(expiresNumber));
+        loginDTO.setRefreshToken(refreshToken);
         return loginDTO;
     }
 
     @Override
-    public LoginDTO refreshToken() {
-        StpUtil.checkActiveTimeout();
-        StpUtil.updateLastActiveToNow();
-        String tokenValue = StpUtil.getTokenValue();
-        Object loginId = StpUtil.getLoginId();
-
+    public RefreshTokenDTO refreshToken(RefreshTokenForm form) {
+        RefreshTokenDTO refreshTokenDTO = RefreshTokenDTO.builder().build();
+        String userId = RefreshTokenUtils.getUserId(form.getRefreshToken());
+        BizAssert.isTrue("无效的刷新 token", StrUtil.isBlank(userId));
+        RefreshTokenUtils.removeRefreshToken(form.getRefreshToken());
+        StpUtil.login(userId);
+        String accessToken = StpUtil.getTokenValue();
         long tokenTimeout = StpUtil.getTokenTimeout() * 1000;
-        long timeout = DateUtil.date().getTime() + tokenTimeout;
-        log.info("剩余有效时间：{}",tokenTimeout);
-        log.info("超时时间：{}",timeout);
-        Date expires = new Date(timeout);
+        long expiresNumber = DateUtil.date().getTime() + tokenTimeout;
+        
+        String refreshToken = RefreshTokenUtils.generateRefreshToken();
+        RefreshTokenUtils.setRefreshToken(refreshToken,userId);
 
-        LoginDTO loginDTO = LoginDTO.builder().accessToken(tokenValue).expires(expires).build();
-        SysUser sysUser = sysUserService.lambdaQuery().eq(SysUser::getUserId,String.valueOf(loginId)).list().stream().findFirst().orElse(null);
-        BeanUtils.copyProperties(sysUser,loginDTO);
-        return loginDTO;
+        refreshTokenDTO.setAccessToken(accessToken);
+        refreshTokenDTO.setRefreshToken(refreshToken);
+        refreshTokenDTO.setExpires(new Date(expiresNumber));
+        return null;
     }
+
 }
