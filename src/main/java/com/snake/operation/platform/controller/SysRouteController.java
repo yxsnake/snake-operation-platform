@@ -1,7 +1,7 @@
 package com.snake.operation.platform.controller;
 
-import com.google.common.collect.Lists;
 import com.snake.operation.platform.model.dto.SysRouteDTO;
+import com.snake.operation.platform.service.SysRouteService;
 import io.github.yxsnake.pisces.web.core.base.Result;
 import io.github.yxsnake.pisces.web.core.framework.controller.BaseController;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,8 +28,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysRouteController extends BaseController {
 
+    private final SysRouteService sysRouteService;
+
     @GetMapping(value = "/get-async-routes")
     public ResponseEntity<Result<List<SysRouteDTO>>> getAsyncRoutes(){
-        return success(Lists.newArrayList());
+        return success(sysRouteService.getAsyncRoutes());
     }
 }
