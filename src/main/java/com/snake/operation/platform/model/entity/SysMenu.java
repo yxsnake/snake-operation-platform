@@ -14,6 +14,8 @@ import lombok.Data;
 @TableName(value = "sys_menu")
 public class SysMenu implements Convert {
 
+    public final static String ROOT = "0";
+
     private String menuId;
 
     private String menuName;
@@ -23,6 +25,8 @@ public class SysMenu implements Convert {
     private String path;
 
     private String icon;
+
+    private String perm;
 
     private String componentName;
 

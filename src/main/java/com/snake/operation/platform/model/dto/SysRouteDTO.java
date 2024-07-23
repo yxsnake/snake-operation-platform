@@ -2,6 +2,8 @@ package com.snake.operation.platform.model.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: snake
  * @create-time: 2024-07-23
@@ -18,6 +20,10 @@ public class SysRouteDTO {
 
     private String name;
 
+    private String parentId;
+
     private SysRouterMetaDTO meta;
+
+    private List<SysRouteDTO> children;
 
 }
