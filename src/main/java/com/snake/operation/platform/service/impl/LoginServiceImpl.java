@@ -65,14 +65,14 @@ public class LoginServiceImpl implements LoginService {
         String accessToken = StpUtil.getTokenValue();
         long tokenTimeout = StpUtil.getTokenTimeout() * 1000;
         long expiresNumber = DateUtil.date().getTime() + tokenTimeout;
-        
+
         String refreshToken = RefreshTokenUtils.generateRefreshToken();
         RefreshTokenUtils.setRefreshToken(refreshToken,userId);
 
         refreshTokenDTO.setAccessToken(accessToken);
         refreshTokenDTO.setRefreshToken(refreshToken);
         refreshTokenDTO.setExpires(new Date(expiresNumber));
-        return null;
+        return refreshTokenDTO;
     }
 
 }
