@@ -1,5 +1,6 @@
 package com.snake.operation.platform.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.List;
@@ -18,12 +19,15 @@ public class SysRouteDTO {
 
     private String path;
 
+    @JsonIgnore
     private String name;
+
 
     private String parentId;
 
     private SysRouterMetaDTO meta;
 
+    @JsonIgnore
     private List<SysRouteDTO> children;
 
 }

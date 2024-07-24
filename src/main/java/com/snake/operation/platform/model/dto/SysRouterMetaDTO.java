@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author: snake
@@ -15,8 +14,10 @@ import java.util.List;
 @Data
 public class SysRouterMetaDTO {
 
+
     private String title;
 
+    @JsonIgnore
     private String icon;
 
     private Integer rank;
