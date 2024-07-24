@@ -17,15 +17,12 @@ public class SysRouterMetaDTO {
 
     private String title;
 
-    @JsonIgnore
     private String icon;
 
     private Integer rank;
 
-    @JsonIgnore
     private Collection<String> roles;
 
-    @JsonIgnore
     private Collection<String> auths;
 
 }
