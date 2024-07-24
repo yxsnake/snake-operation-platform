@@ -25,4 +25,6 @@ public class SysUser implements Convert {
 
     private Integer status;
 
+    private String avatar;
+
 }

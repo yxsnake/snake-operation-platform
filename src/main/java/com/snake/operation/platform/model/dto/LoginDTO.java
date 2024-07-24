@@ -27,4 +27,6 @@ public class LoginDTO {
     private Integer gender;
 
     private Integer status;
+
+    private String avatar;
 }

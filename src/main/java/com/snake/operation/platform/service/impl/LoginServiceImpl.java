@@ -43,6 +43,9 @@ public class LoginServiceImpl implements LoginService {
                 .accessToken(token)
                 .build();
         BeanUtils.copyProperties(sysUser,loginDTO);
+        if(StrUtil.isBlank(sysUser.getAvatar())){
+            loginDTO.setAvatar(SysUser.DEFAULT_AVATAR);
+        }
 
         String refreshToken = RefreshTokenUtils.generateRefreshToken();
 
