@@ -13,7 +13,7 @@ import lombok.Getter;
 @Getter
 public enum BusinessResultCode implements IResultCode {
 
-    INVALID_REFRESH_TOKEN(400,"无效的刷新token")
+    INVALID_REFRESH_TOKEN(400,"无效的刷新token"),
 
 
     ;
