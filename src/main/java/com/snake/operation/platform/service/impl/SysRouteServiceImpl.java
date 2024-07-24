@@ -11,6 +11,7 @@ import com.snake.operation.platform.model.entity.SysUserRole;
 import com.snake.operation.platform.service.SysMenuService;
 import com.snake.operation.platform.service.SysRouteService;
 import com.snake.operation.platform.service.SysUserRoleService;
+import io.github.yxsnake.pisces.web.core.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -59,6 +60,9 @@ public class SysRouteServiceImpl implements SysRouteService {
             sysRouteDTO.setPath(menu.getPath());
             sysRouteDTO.setName(menu.getComponentName());
             SysRouterMetaDTO metaDTO = new SysRouterMetaDTO();
+            metaDTO.setTitle(menu.getMenuName());
+            metaDTO.setRank(menu.getRank());
+            metaDTO.setIcon(menu.getIcon());
             Set<String> auths = btnPermsMap.get(menuId);
             if(CollUtil.isNotEmpty(auths)){
                 metaDTO.setAuths(auths);
@@ -76,11 +80,13 @@ public class SysRouteServiceImpl implements SysRouteService {
 
     private List<SysRouteDTO> streamToTree(List<SysRouteDTO> routes, String parentId) {
         List<SysRouteDTO> list = routes.stream()
-                .filter(parent -> parent.getParentId().equals(parentId))
-                .map(child -> {
-                    child.setChildren(streamToTree(routes,child.getId()));
-                    return child;
-                }).collect(Collectors.toList());
+                .filter(item -> item.getParentId().equals(parentId))
+                .collect(Collectors.toList());
+
+        list = list.stream().map(item->{
+            item.setChildren(streamToTree(routes,item.getId()));
+            return item;
+        }).collect(Collectors.toList());
         return list;
     }
 }
