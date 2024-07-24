@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.snake.operation.platform.model.dto.LoginDTO;
 import com.snake.operation.platform.model.dto.RefreshTokenDTO;
 import com.snake.operation.platform.model.entity.SysUser;
+import com.snake.operation.platform.model.enums.BusinessResultCode;
 import com.snake.operation.platform.model.enums.SysUserStatusEnum;
 import com.snake.operation.platform.model.form.LoginForm;
 import com.snake.operation.platform.model.form.RefreshTokenForm;
@@ -59,7 +60,7 @@ public class LoginServiceImpl implements LoginService {
     public RefreshTokenDTO refreshToken(RefreshTokenForm form) {
         RefreshTokenDTO refreshTokenDTO = RefreshTokenDTO.builder().build();
         String userId = RefreshTokenUtils.getUserId(form.getRefreshToken());
-        BizAssert.isTrue("无效的刷新 token", StrUtil.isBlank(userId));
+        BizAssert.isTrue(BusinessResultCode.INVALID_REFRESH_TOKEN, StrUtil.isBlank(userId));
         RefreshTokenUtils.removeRefreshToken(form.getRefreshToken());
         StpUtil.login(userId);
         String accessToken = StpUtil.getTokenValue();
