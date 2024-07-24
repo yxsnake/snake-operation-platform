@@ -18,7 +18,7 @@ public enum BusinessResultCode implements IResultCode {
 
     ;
 
-    private final int code;
+    private final Integer code;
 
     private final String msg;
 
