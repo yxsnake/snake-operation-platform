@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Set;
 
 
 @Data
@@ -29,4 +30,6 @@ public class LoginDTO {
     private Integer status;
 
     private String avatar;
+
+    private Set<String> roles;
 }

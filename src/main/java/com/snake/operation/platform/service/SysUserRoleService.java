@@ -5,6 +5,7 @@ import com.snake.operation.platform.model.entity.SysRole;
 import com.snake.operation.platform.model.entity.SysUserRole;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author: snake
@@ -14,4 +15,6 @@ import java.util.List;
  */
 public interface SysUserRoleService extends IService<SysUserRole> {
     List<SysRole> getRoleListByUserId(String userId);
+    Set<String> getCurrentUserRoles(String userId);
+
 }

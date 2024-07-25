@@ -11,6 +11,7 @@ import com.snake.operation.platform.model.enums.SysUserStatusEnum;
 import com.snake.operation.platform.model.form.LoginForm;
 import com.snake.operation.platform.model.form.RefreshTokenForm;
 import com.snake.operation.platform.service.LoginService;
+import com.snake.operation.platform.service.SysUserRoleService;
 import com.snake.operation.platform.service.SysUserService;
 import com.snake.operation.platform.utils.RefreshTokenUtils;
 import io.github.yxsnake.pisces.web.core.utils.BizAssert;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -28,6 +30,8 @@ import java.util.Objects;
 public class LoginServiceImpl implements LoginService {
 
     private final SysUserService sysUserService;
+
+    private final SysUserRoleService sysUserRoleService;
 
     @Override
     public LoginDTO login(LoginForm form) {
@@ -37,7 +41,8 @@ public class LoginServiceImpl implements LoginService {
         BizAssert.isTrue("用户名或密码错误", Objects.isNull(sysUser));
         BizAssert.isTrue("账号已停用", SysUserStatusEnum.DISABLE.getValue().equals(sysUser.getStatus()));
         BizAssert.isTrue("密码错误",!sysUser.getPassword().equals(form.getPassword()));
-        StpUtil.login(sysUser.getUserId());
+        String userId = sysUser.getUserId();
+        StpUtil.login(userId);
         String token = StpUtil.getTokenValue();
         LoginDTO loginDTO = LoginDTO.builder()
                 .accessToken(token)
@@ -56,6 +61,9 @@ public class LoginServiceImpl implements LoginService {
         log.info("超时时间：{}",expiresNumber);
         loginDTO.setExpires(new Date(expiresNumber));
         loginDTO.setRefreshToken(refreshToken);
+        // 查询当前用的角色标识
+        Set<String> roleCodes =  sysUserRoleService.getCurrentUserRoles(userId);
+        loginDTO.setRoles(roleCodes);
         return loginDTO;
     }
 
