@@ -21,6 +21,8 @@ public class SysRouterMetaDTO {
 
     private Integer rank;
 
+    private Boolean showLink = Boolean.TRUE;
+
     private Collection<String> roles;
 
     private Collection<String> auths;
