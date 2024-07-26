@@ -1,6 +1,7 @@
 package com.snake.operation.platform.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Sets;
 import lombok.Data;
 
 import java.util.Collection;
@@ -21,10 +22,10 @@ public class SysRouterMetaDTO {
 
     private Integer rank;
 
-    private Boolean showLink = Boolean.TRUE;
+    private Boolean showLink = Boolean.FALSE;
 
-    private Collection<String> roles;
+    private Collection<String> roles = Sets.newHashSet();
 
-    private Collection<String> auths;
+    private Collection<String> auths = Sets.newHashSet();
 
 }

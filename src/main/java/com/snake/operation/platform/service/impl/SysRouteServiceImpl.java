@@ -2,6 +2,7 @@ package com.snake.operation.platform.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.snake.operation.platform.model.dto.SysRouteDTO;
 import com.snake.operation.platform.model.dto.SysRouterMetaDTO;
@@ -58,8 +59,11 @@ public class SysRouteServiceImpl implements SysRouteService {
             sysRouteDTO.setId(menuId);
             sysRouteDTO.setParentId(menu.getParentId());
             sysRouteDTO.setPath(menu.getPath());
-            sysRouteDTO.setName(menu.getComponentName());
             SysRouterMetaDTO metaDTO = new SysRouterMetaDTO();
+            if(StrUtil.isNotBlank(menu.getComponentName())){
+                sysRouteDTO.setName(menu.getComponentName());
+                metaDTO.setShowLink(Boolean.TRUE);
+            }
             metaDTO.setTitle(menu.getMenuName());
             metaDTO.setRank(menu.getRank());
             metaDTO.setIcon(menu.getIcon());
