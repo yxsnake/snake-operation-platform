@@ -65,7 +65,9 @@ public class SysRouteServiceImpl implements SysRouteService {
             }
             SysRouterMetaDTO metaDTO = new SysRouterMetaDTO();
             metaDTO.setTitle(menu.getMenuName());
-            metaDTO.setRank(menu.getRank());
+            if(SysMenuTypeEnum.MENU.getValue().equals(menu.getMenuType())){
+                metaDTO.setRank(menu.getRank());
+            }
             metaDTO.setIcon(menu.getIcon());
             Set<String> auths = btnPermsMap.get(menuId);
             if(CollUtil.isNotEmpty(auths) && SysMenuTypeEnum.BUTTON.getValue().equals(menu.getMenuType())){
