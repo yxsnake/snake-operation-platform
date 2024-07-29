@@ -19,7 +19,6 @@ public class SysRouteDTO {
 
     private String path;
 
-    @JsonIgnore
     private String name;
 
     private String parentId;
