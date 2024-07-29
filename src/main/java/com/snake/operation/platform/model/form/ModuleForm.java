@@ -15,22 +15,22 @@ import java.io.Serializable;
  * @version: 1.0
  */
 @Data
-@Schema(name = "模块表单提交数据")
+@Schema(description = "模块表单提交数据")
 public class ModuleForm implements Convert, Serializable {
 
-    @Schema(name = "模块唯一标识")
+    @Schema(description = "模块唯一标识")
     @NotBlank(message = "模块唯一标识不能为空",groups = {Modify.class})
     private String moduleId;
     
-    @Schema(name = "产品唯一标识")
+    @Schema(description = "产品唯一标识")
     @NotBlank(message = "产品唯一标识不能为空",groups = {Create.class, Modify.class})
     private String productId;
 
-    @Schema(name = "模块名称")
+    @Schema(description = "模块名称")
     @NotBlank(message = "模块名称不能为空",groups = {Create.class, Modify.class})
     private String moduleName;
 
-    @Schema(name = "是否免费 (1:是，0:付费)")
+    @Schema(description = "是否免费 (1:是，0:付费)")
     @NotNull(message = "是否免费不能为空",groups = {Create.class, Modify.class})
     private Integer isFree;
 

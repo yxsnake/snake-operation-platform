@@ -14,7 +14,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Data
-@Schema(name = "角色授权菜单资源")
+@Schema(description = "角色授权菜单资源")
 public class RoleAuthForm {
 
     @NotBlank(message = "角色ID不能为空")

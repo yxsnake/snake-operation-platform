@@ -12,14 +12,14 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-@Schema(name = "启用或禁用平台用户请求参数")
+@Schema(description = "启用或禁用平台用户请求参数")
 public class SysUserEnableOrDisableForm {
 
-    @Schema(name = "用户 ID")
+    @Schema(description = "用户 ID")
     @NotBlank(message = "用户 ID 不能为空")
     private String userId;
 
-    @Schema(name = "账号状态")
+    @Schema(description = "账号状态")
     @NotNull(message = "状态不能为空")
     private Integer status;
 }

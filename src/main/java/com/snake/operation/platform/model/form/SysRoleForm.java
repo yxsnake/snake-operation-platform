@@ -11,19 +11,19 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-@Schema(name = "系统角色创建编辑参数对象")
+@Schema(description = "系统角色创建编辑参数对象")
 public class SysRoleForm implements Convert {
 
-    @Schema(name = "角色ID")
+    @Schema(description = "角色ID")
     private String roleId;
 
-    @Schema(name = "角色编码")
+    @Schema(description = "角色编码")
     private String roleCode;
 
-    @Schema(name = "角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
 
-    @Schema(name = "备注")
+    @Schema(description = "备注")
     private String remark;
 
     public interface Create{}

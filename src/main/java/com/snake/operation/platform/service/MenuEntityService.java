@@ -10,7 +10,6 @@ import com.snake.operation.platform.model.queries.MenuPageEqualsQueries;
 import io.github.yxsnake.pisces.web.core.base.BaseFuzzyQueries;
 import io.github.yxsnake.pisces.web.core.base.QueryFilter;
 
-import java.util.List;
 
 /**
  * @author: snake

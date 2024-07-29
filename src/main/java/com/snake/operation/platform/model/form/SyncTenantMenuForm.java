@@ -12,12 +12,12 @@ import java.util.List;
  * @version: 1.0
  */
 @Data
-@Schema(name = "同步菜单给租户请求参数")
+@Schema(description = "同步菜单给租户请求参数")
 public class SyncTenantMenuForm {
 
-    @Schema(name = "平台菜单ID")
+    @Schema(description = "平台菜单ID")
     private String platformMenuId;
 
-    @Schema(name = "目标租户ID")
+    @Schema(description = "目标租户ID")
     private List<String> tenantIds;
 }

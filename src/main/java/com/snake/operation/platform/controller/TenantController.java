@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import io.github.yxsnake.pisces.web.core.base.Result;
 import io.github.yxsnake.pisces.web.core.framework.controller.BaseController;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "租户相关API")
 @Slf4j
 @RestController
-@RequestMapping(value = "/tenant")
+@RequestMapping(value = "/tenant",consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class TenantController extends BaseController {
 

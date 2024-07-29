@@ -13,6 +13,7 @@ import io.github.yxsnake.pisces.web.core.base.QueryFilter;
 import io.github.yxsnake.pisces.web.core.base.Result;
 import io.github.yxsnake.pisces.web.core.framework.controller.BaseController;
 import io.github.yxsnake.pisces.web.core.framework.model.BaseFuzzyQueries;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "产品相关API")
 @Slf4j
 @RestController
-@RequestMapping(value = "/product")
+@RequestMapping(value = "/product",consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class ProductController extends BaseController {
 

@@ -11,7 +11,7 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-@Schema(name = "运营平台用户分页模糊查询条件")
+@Schema(description = "运营平台用户分页模糊查询条件")
 public class SysUserFuzzyQueries extends BaseFuzzyQueries {
 
     private String username;

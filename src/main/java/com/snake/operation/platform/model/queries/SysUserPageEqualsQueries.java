@@ -10,7 +10,7 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-@Schema(name = "运营平台用户分页查询条件")
+@Schema(description = "运营平台用户分页查询条件")
 public class SysUserPageEqualsQueries {
 
     private Integer status;

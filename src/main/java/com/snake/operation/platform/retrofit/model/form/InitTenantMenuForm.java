@@ -7,47 +7,47 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-@Schema(name = "初始化相关菜单信息")
+@Schema(description = "初始化相关菜单信息")
 public class InitTenantMenuForm implements Convert {
 
-    @Schema(name = "平台菜单ID")
+    @Schema(description = "平台菜单ID")
     private String platformMenuId;
 
-    @Schema(name = "平台上级菜单ID")
+    @Schema(description = "平台上级菜单ID")
     private String platformParentId;
 
-    @Schema(name = "菜单名称")
+    @Schema(description = "菜单名称")
     @NotBlank(message = "菜单名称不能为空")
     private String name;
 
-    @Schema(name = "资源类型(0:目录,1:菜单, 2:按钮 ,3:外链,4:接口)")
+    @Schema(description = "资源类型(0:目录,1:菜单, 2:按钮 ,3:外链,4:接口)")
     @NotNull(message = "不能为空")
     private Integer resourceType;
 
-    @Schema(name = "路由路径(浏览器地址栏路径)")
+    @Schema(description = "路由路径(浏览器地址栏路径)")
     @NotBlank(message = "路由路径不能为空")
     private String path;
 
-    @Schema(name = "层级（0～5， 最多支持 5 层）")
+    @Schema(description = "层级（0～5， 最多支持 5 层）")
     @NotBlank(message = "层级不能为空")
     private Integer level;
 
-    @Schema(name = "组件路径(vue页面完整路径，省略.vue后缀)")
+    @Schema(description = "组件路径(vue页面完整路径，省略.vue后缀)")
     private String component;
 
-    @Schema(name = "按钮权限标识")
+    @Schema(description = "按钮权限标识")
     private String perm;
 
-    @Schema(name = "菜单图标")
+    @Schema(description = "菜单图标")
     @NotBlank(message = "菜单图标不能为空")
     private String icon;
 
-    @Schema(name = "跳转路径")
+    @Schema(description = "跳转路径")
     private String redirect;
 
-    @Schema(name = "备注")
+    @Schema(description = "备注")
     private String remark;
 
-    @Schema(name = "排序")
+    @Schema(description = "排序")
     private Long sort;
 }

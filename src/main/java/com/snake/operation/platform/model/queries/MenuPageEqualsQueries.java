@@ -10,9 +10,9 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-@Schema(name = "菜单分页查询条件")
+@Schema(description = "菜单分页查询条件")
 public class MenuPageEqualsQueries {
 
-    @Schema(name = "菜单名称")
+    @Schema(description = "菜单名称")
     private String menuName;
 }

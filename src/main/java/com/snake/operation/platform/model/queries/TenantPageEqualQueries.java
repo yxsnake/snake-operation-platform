@@ -10,9 +10,9 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-@Schema(name = "产品分页查询参数")
+@Schema(description = "产品分页查询参数")
 public class TenantPageEqualQueries {
 
-    @Schema(name = "租户名称")
+    @Schema(description = "租户名称")
     private String tenantName;
 }
