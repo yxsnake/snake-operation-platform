@@ -47,7 +47,7 @@ public class ProductController extends BaseController {
     }
 
     @Operation(summary = "分页查询产品列表")
-    @PostMapping(value = "/pageList")
+    @PostMapping(value = "/page-list")
     public ResponseEntity<Result<IPage<ProductDTO>>> pageList(@Validated @RequestBody QueryFilter<ProductPageEqualsQueries, BaseFuzzyQueries> queryFilter){
         return success(productEntityService.pageList(queryFilter));
     }

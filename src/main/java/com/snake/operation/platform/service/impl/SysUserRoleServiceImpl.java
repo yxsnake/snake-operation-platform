@@ -1,8 +1,10 @@
 package com.snake.operation.platform.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.snake.operation.platform.mapper.SysRoleMapper;
 import com.snake.operation.platform.mapper.SysUserRoleMapper;
@@ -46,5 +48,26 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
                 Wrappers.lambdaQuery(SysRole.class).in(SysRole::getRoleId, roleIds)
         ).stream().map(SysRole::getRoleCode).collect(Collectors.toSet());
         return roleCodeList;
+    }
+
+    @Override
+    public List<SysUserRole> buildUserRoleList(String userId, List<SysRole> sysRoles) {
+        List<SysUserRole> sysUserRoles = Lists.newArrayList();
+        for (SysRole sysRole : sysRoles) {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setId(IdWorker.getIdStr());
+            sysUserRole.setUserId(userId);
+            sysUserRole.setRoleId(sysRole.getRoleId());
+            sysUserRoles.add(sysUserRole);
+        }
+        return sysUserRoles;
+    }
+
+    @Override
+    public void removeRoleByUserId(String userId) {
+        List<SysUserRole> list = this.lambdaQuery().eq(SysUserRole::getUserId, userId).list();
+        if(CollUtil.isNotEmpty(list)){
+            this.removeBatchByIds(list.stream().map(SysUserRole::getId).collect(Collectors.toList()));
+        }
     }
 }

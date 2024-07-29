@@ -44,7 +44,7 @@ public class TenantController extends BaseController {
     }
 
     @Operation(summary = "分页查询租户列表")
-    @PostMapping(value = "/pageList")
+    @PostMapping(value = "/page-list")
     public ResponseEntity<Result<IPage<TenantDTO>>> pageList(@RequestBody QueryFilter<TenantPageEqualQueries, BaseFuzzyQueries> queryFilter){
         return success(tenantEntityService.pageList(queryFilter));
     }

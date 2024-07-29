@@ -48,7 +48,7 @@ public class MenuController extends BaseController {
     }
 
     @Operation(summary = "菜单分页查询")
-    @PostMapping(value = "/pageList")
+    @PostMapping(value = "/page-list")
     public ResponseEntity<Result<IPage<MenuDTO>>> pageList(@RequestBody QueryFilter<MenuPageEqualsQueries, BaseFuzzyQueries> queryFilter){
         return success(menuEntityService.pageList(queryFilter));
     }
