@@ -29,6 +29,7 @@ public class SysRouteDTO {
 
     private SysRouterMetaDTO meta;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<SysRouteDTO> children;
 
 }
