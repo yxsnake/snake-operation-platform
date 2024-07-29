@@ -22,8 +22,6 @@ public class SysRouterMetaDTO {
 
     private Integer rank;
 
-    private Boolean showLink = Boolean.FALSE;
-
     private Collection<String> roles = Sets.newHashSet();
 
     private Collection<String> auths = Sets.newHashSet();
