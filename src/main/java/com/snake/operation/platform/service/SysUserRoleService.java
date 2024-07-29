@@ -20,4 +20,8 @@ public interface SysUserRoleService extends IService<SysUserRole> {
     List<SysUserRole> buildUserRoleList(String userId, List<SysRole> sysRoles);
 
     void removeRoleByUserId(String userId);
+
+    Boolean checkRoleBindUser(String roleId);
+
+    void removeRoleByRoleId(String roleId);
 }

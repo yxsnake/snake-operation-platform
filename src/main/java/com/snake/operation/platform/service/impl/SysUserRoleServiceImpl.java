@@ -70,4 +70,18 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             this.removeBatchByIds(list.stream().map(SysUserRole::getId).collect(Collectors.toList()));
         }
     }
+
+    @Override
+    public Boolean checkRoleBindUser(String roleId) {
+        Long count = this.lambdaQuery().eq(SysUserRole::getRoleId, roleId).count();
+        return count>0?Boolean.TRUE:Boolean.FALSE;
+    }
+
+    @Override
+    public void removeRoleByRoleId(String roleId) {
+        List<SysUserRole> list = this.lambdaQuery().eq(SysUserRole::getRoleId, roleId).list();
+        if(CollUtil.isNotEmpty(list)){
+            this.removeBatchByIds(list.stream().map(SysUserRole::getId).collect(Collectors.toList()));
+        }
+    }
 }

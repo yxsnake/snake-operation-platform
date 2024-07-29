@@ -20,6 +20,8 @@ public class SysRole implements Convert {
 
     private String roleName;
 
+    private String remark;
+
     private Integer deleted;
 
 }

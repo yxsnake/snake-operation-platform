@@ -11,11 +11,28 @@
  Target Server Version : 50736
  File Encoding         : 65001
 
- Date: 23/07/2024 12:56:04
+ Date: 29/07/2024 15:41:09
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for demo
+-- ----------------------------
+DROP TABLE IF EXISTS `demo`;
+CREATE TABLE `demo` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of demo
+-- ----------------------------
+BEGIN;
+COMMIT;
 
 -- ----------------------------
 -- Table structure for p_api_resource
@@ -221,6 +238,89 @@ INSERT INTO `p_tenant_resource` VALUES ('1814224769709527045', '1814224657935519
 COMMIT;
 
 -- ----------------------------
+-- Table structure for sys_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_menu`;
+CREATE TABLE `sys_menu` (
+  `menu_id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '菜单ID',
+  `parent_id` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '上级菜单',
+  `menu_name` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '菜单名称',
+  `menu_type` smallint(3) DEFAULT NULL COMMENT '菜单类型(0-目录，1-菜单，2-按钮)',
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '路由路径',
+  `icon` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '图标',
+  `component_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '组件名称',
+  `perm` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '权限标识',
+  `deleted` smallint(3) DEFAULT '0' COMMENT '逻辑删除(0-正常,1-删除)',
+  `rank` int(8) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`menu_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of sys_menu
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_menu` VALUES ('2', '0', '系统管理', 0, '/system', 'el:cogs', NULL, NULL, 0, 1);
+INSERT INTO `sys_menu` VALUES ('201', '2', '用户管理', 1, '/system/user/index', 'el:user', 'SystemUser', NULL, 0, 21);
+INSERT INTO `sys_menu` VALUES ('202', '2', '角色管理', 1, '/system/role/index', 'el:group', 'SystemRole', NULL, 0, 22);
+INSERT INTO `sys_menu` VALUES ('203', '2', '菜单管理', 1, '/system/menu/index', 'el:lines', 'SystemMenu', NULL, 0, 23);
+INSERT INTO `sys_menu` VALUES ('3', '0', '租户运营', 0, '/tenant', 'el:cog-alt', '', NULL, 0, 2);
+INSERT INTO `sys_menu` VALUES ('301', '3', '租户管理', 1, '/tenant/list/index', 'el:th-list', 'TenantList', NULL, 0, 31);
+INSERT INTO `sys_menu` VALUES ('302', '3', '租户初始化', 1, '/tenant/audit/index', 'el:ok-sign', 'TenantAudit', NULL, 0, 32);
+INSERT INTO `sys_menu` VALUES ('4', '0', '租户权限管理', 0, '/platform', 'el:wrench', NULL, NULL, 0, NULL);
+INSERT INTO `sys_menu` VALUES ('401', '4', '平台角色管理', 1, '/platform/role/index', 'el:torso', 'TenantRoleManage', NULL, 0, 41);
+INSERT INTO `sys_menu` VALUES ('402', '4', '平台菜单管理', 1, '/platform/menu/index', 'el:th-large', 'TenantMenuManage', NULL, 0, 42);
+INSERT INTO `sys_menu` VALUES ('403', '4', '平台API 管理', 1, '/platform/resources/index', 'el:align-justify', 'PlatformResourceMange', NULL, 0, 43);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role` (
+  `role_id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色 ID',
+  `role_code` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色编码',
+  `role_name` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色名称',
+  `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `deleted` smallint(3) DEFAULT '0' COMMENT '逻辑删除(0-正常，1-删除)',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_role` VALUES ('1', 'admin', '系统管理员', NULL, 0);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_role_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role_menu`;
+CREATE TABLE `sys_role_menu` (
+  `id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_id` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色 ID',
+  `menu_id` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '菜单 ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of sys_role_menu
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_role_menu` VALUES ('1', '1', '2');
+INSERT INTO `sys_role_menu` VALUES ('10', '1', '402');
+INSERT INTO `sys_role_menu` VALUES ('11', '1', '403');
+INSERT INTO `sys_role_menu` VALUES ('2', '1', '201');
+INSERT INTO `sys_role_menu` VALUES ('3', '1', '202');
+INSERT INTO `sys_role_menu` VALUES ('4', '1', '203');
+INSERT INTO `sys_role_menu` VALUES ('5', '1', '3');
+INSERT INTO `sys_role_menu` VALUES ('6', '1', '301');
+INSERT INTO `sys_role_menu` VALUES ('7', '1', '302');
+INSERT INTO `sys_role_menu` VALUES ('8', '1', '4');
+INSERT INTO `sys_role_menu` VALUES ('9', '1', '401');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
@@ -240,7 +340,25 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', 'admin', '123456', '超级运营专员', 'https://i1.hdslb.com/bfs/face/98a570a6c6d6a263bcb0cba9e15e492125e9d310.jpg@120w_120h_1c', 1, 0, '2024-07-20 13:50:06');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'Admin123456', '超级运营专员', 'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2024%2F0511%2Fb0cd6623j00sdas3j0017d000gx00g1g.jpg&thumbnail=660x2147483647&quality=80&type=jpg', 1, 0, '2024-07-20 13:50:06');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_role`;
+CREATE TABLE `sys_user_role` (
+  `id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role_id` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of sys_user_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -14,7 +14,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Data
-@Schema(name = "平台用户创建编辑参数对象")
+@Schema(name = "系统用户创建编辑参数对象")
 public class SysUserForm implements Convert {
 
     @Schema(name = "用户ID")

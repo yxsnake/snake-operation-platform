@@ -21,5 +21,7 @@ public class SysRoleDTO implements Serializable {
 
     private String roleName;
 
+    private String remark;
+
     private Integer deleted;
 }
