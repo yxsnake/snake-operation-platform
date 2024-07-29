@@ -60,7 +60,9 @@ public class SysRouteServiceImpl implements SysRouteService {
             sysRouteDTO.setId(menuId);
             sysRouteDTO.setParentId(menu.getParentId());
             sysRouteDTO.setPath(menu.getPath());
-            sysRouteDTO.setName(menu.getComponentName());
+            if(StrUtil.isNotBlank(menu.getComponentName())){
+                sysRouteDTO.setName(menu.getComponentName());
+            }
             SysRouterMetaDTO metaDTO = new SysRouterMetaDTO();
             metaDTO.setTitle(menu.getMenuName());
             metaDTO.setRank(menu.getRank());
