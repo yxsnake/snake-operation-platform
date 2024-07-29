@@ -21,7 +21,7 @@ import java.util.List;
  * @version: 1.0
  */
 
-@Tag(name = "运营平台登录")
+@Tag(name = "运营平台菜单路由")
 @Slf4j
 @RestController
 @RequestMapping
