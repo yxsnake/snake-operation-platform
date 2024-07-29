@@ -9,6 +9,7 @@ import com.snake.operation.platform.model.dto.SysRouterMetaDTO;
 import com.snake.operation.platform.model.entity.SysMenu;
 import com.snake.operation.platform.model.entity.SysRole;
 import com.snake.operation.platform.model.entity.SysUserRole;
+import com.snake.operation.platform.model.enums.SysMenuTypeEnum;
 import com.snake.operation.platform.service.SysMenuService;
 import com.snake.operation.platform.service.SysRouteService;
 import com.snake.operation.platform.service.SysUserRoleService;
@@ -65,11 +66,11 @@ public class SysRouteServiceImpl implements SysRouteService {
             metaDTO.setRank(menu.getRank());
             metaDTO.setIcon(menu.getIcon());
             Set<String> auths = btnPermsMap.get(menuId);
-            if(CollUtil.isNotEmpty(auths)){
+            if(CollUtil.isNotEmpty(auths) && SysMenuTypeEnum.BUTTON.getValue().equals(menu.getMenuType())){
                 metaDTO.setAuths(auths);
             }
             Set<String> roles = menuRolesMap.get(menuId);
-            if(CollUtil.isNotEmpty(roles)){
+            if(CollUtil.isNotEmpty(roles) && SysMenuTypeEnum.MENU.getValue().equals(menu.getMenuType())){
                 metaDTO.setRoles(roles);
             }
             sysRouteDTO.setMeta(metaDTO);

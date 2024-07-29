@@ -15,12 +15,14 @@ import java.util.List;
 @Data
 public class SysRouteDTO {
 
+    @JsonIgnore
     private String id;
 
     private String path;
 
     private String name;
 
+    @JsonIgnore
     private String parentId;
 
     private SysRouterMetaDTO meta;
