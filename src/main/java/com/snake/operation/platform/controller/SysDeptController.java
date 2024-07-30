@@ -3,17 +3,13 @@ package com.snake.operation.platform.controller;
 import com.snake.operation.platform.model.dto.SysDeptDTO;
 import com.snake.operation.platform.model.dto.SysDeptDetailDTO;
 import com.snake.operation.platform.model.form.SysDeptForm;
-import com.snake.operation.platform.model.fuzzy.SysDeptFuzzyQueries;
-import com.snake.operation.platform.model.queries.SysDeptEqualsQueries;
 import com.snake.operation.platform.service.SysDeptService;
-import io.github.yxsnake.pisces.web.core.base.QueryFilter;
 import io.github.yxsnake.pisces.web.core.base.Result;
 import io.github.yxsnake.pisces.web.core.framework.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -51,8 +47,8 @@ public class SysDeptController extends BaseController {
     }
 
     @Operation(summary = "查询部门列表")
-    @PostMapping(value = "/list")
-    public ResponseEntity<Result<List<SysDeptDetailDTO>>> list(@RequestBody QueryFilter<SysDeptEqualsQueries, SysDeptFuzzyQueries> queryFilter){
-        return success(sysDeptService.queryListCondition(queryFilter));
+    @GetMapping(value = "/list-all")
+    public ResponseEntity<Result<List<SysDeptDetailDTO>>> listAll(){
+        return success(sysDeptService.listAll());
     }
 }
