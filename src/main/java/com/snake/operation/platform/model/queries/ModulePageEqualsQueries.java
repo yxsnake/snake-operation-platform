@@ -1,5 +1,6 @@
 package com.snake.operation.platform.model.queries;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
+@Schema(name = "模块分页查询参数")
 public class ModulePageEqualsQueries {
 
     private String moduleName;

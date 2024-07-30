@@ -11,7 +11,10 @@ import com.snake.operation.platform.model.dto.SysDeptDTO;
 import com.snake.operation.platform.model.dto.SysDeptDetailDTO;
 import com.snake.operation.platform.model.entity.SysDept;
 import com.snake.operation.platform.model.form.SysDeptForm;
+import com.snake.operation.platform.model.fuzzy.SysDeptFuzzyQueries;
+import com.snake.operation.platform.model.queries.SysDeptEqualsQueries;
 import com.snake.operation.platform.service.SysDeptService;
+import io.github.yxsnake.pisces.web.core.base.QueryFilter;
 import io.github.yxsnake.pisces.web.core.enums.DisabledEnum;
 import io.github.yxsnake.pisces.web.core.utils.BizAssert;
 import lombok.extern.slf4j.Slf4j;
@@ -83,9 +86,17 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public List<SysDeptDetailDTO> treeList() {
-        List<SysDept> list = this.lambdaQuery()
-                .eq(SysDept::getStatus,DisabledEnum.NORMAL.getValue())
+    public List<SysDeptDetailDTO> queryListCondition(QueryFilter<SysDeptEqualsQueries, SysDeptFuzzyQueries> queryFilter) {
+        SysDeptEqualsQueries equalsQueries = queryFilter.getEqualsQueries();
+        if(Objects.isNull(equalsQueries)){
+            equalsQueries = new SysDeptEqualsQueries();
+        }
+        SysDeptFuzzyQueries fuzzyQueries = queryFilter.getFuzzyQueries();
+        if(Objects.isNull(fuzzyQueries)){
+            fuzzyQueries = new SysDeptFuzzyQueries();
+        }
+        List<SysDept> list = this.lambdaQuery().eq(Objects.nonNull(equalsQueries.getStatus()), SysDept::getStatus, equalsQueries.getStatus())
+                .like(StrUtil.isNotBlank(fuzzyQueries.getDeptName()), SysDept::getDeptName, fuzzyQueries.getDeptName())
                 .list();
         if(CollUtil.isEmpty(list)){
             return Lists.newArrayList();

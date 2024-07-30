@@ -10,7 +10,7 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-@Schema(description = "运营平台角色分页查询条件")
+@Schema(name = "运营平台角色分页查询条件")
 public class SysRolePageEqualsQueries {
 
     private String roleCode;
