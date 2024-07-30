@@ -26,7 +26,7 @@ import java.util.List;
 @Tag(name = "运营平台菜单路由")
 @Slf4j
 @RestController
-@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class SysRouteController extends BaseController {
 
