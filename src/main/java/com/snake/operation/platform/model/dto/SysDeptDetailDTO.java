@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Schema(name = "部门树对象")
-public class SysDeptTreeDTO {
+public class SysDeptDetailDTO {
 
     @Schema(description = "部门ID")
     @JsonProperty("id")

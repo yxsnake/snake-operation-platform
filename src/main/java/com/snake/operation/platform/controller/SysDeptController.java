@@ -1,7 +1,7 @@
 package com.snake.operation.platform.controller;
 
 import com.snake.operation.platform.model.dto.SysDeptDTO;
-import com.snake.operation.platform.model.dto.SysDeptTreeDTO;
+import com.snake.operation.platform.model.dto.SysDeptDetailDTO;
 import com.snake.operation.platform.model.form.SysDeptForm;
 import com.snake.operation.platform.service.SysDeptService;
 import io.github.yxsnake.pisces.web.core.base.Result;
@@ -48,7 +48,7 @@ public class SysDeptController extends BaseController {
 
     @Operation(summary = "查询部门树")
     @GetMapping(value = "/tree-list")
-    public ResponseEntity<Result<List<SysDeptTreeDTO>>> treeList(){
+    public ResponseEntity<Result<List<SysDeptDetailDTO>>> treeList(){
         return success(sysDeptService.treeList());
     }
 }
