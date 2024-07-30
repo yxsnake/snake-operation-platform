@@ -51,7 +51,7 @@ public class SysDeptController extends BaseController {
     }
 
     @Operation(summary = "查询部门列表")
-    @GetMapping(value = "/list")
+    @PostMapping(value = "/list")
     public ResponseEntity<Result<List<SysDeptDetailDTO>>> list(@RequestBody QueryFilter<SysDeptEqualsQueries, SysDeptFuzzyQueries> queryFilter){
         return success(sysDeptService.queryListCondition(queryFilter));
     }
