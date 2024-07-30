@@ -1,5 +1,7 @@
 package com.snake.operation.platform.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.github.yxsnake.pisces.web.core.converter.Convert;
 import lombok.Data;
@@ -16,6 +18,7 @@ public class SysMenu implements Convert {
 
     public final static String ROOT = "0";
 
+    @TableId(type = IdType.NONE)
     private String menuId;
 
     private String menuName;

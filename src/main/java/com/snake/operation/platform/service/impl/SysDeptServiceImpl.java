@@ -1,9 +1,11 @@
 package com.snake.operation.platform.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.snake.operation.platform.mapper.SysDeptMapper;
 import com.snake.operation.platform.model.dto.SysDeptDTO;
 import com.snake.operation.platform.model.dto.SysDeptTreeDTO;
@@ -17,7 +19,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -79,8 +83,15 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public SysDeptTreeDTO treeList() {
-
-        return null;
+    public List<SysDeptTreeDTO> treeList() {
+        List<SysDept> list = this.lambdaQuery()
+                .eq(SysDept::getStatus,DisabledEnum.NORMAL.getValue())
+                .list();
+        if(CollUtil.isEmpty(list)){
+            return Lists.newArrayList();
+        }
+        return list.stream()
+                .map(item->item.convert(SysDeptTreeDTO.class))
+                .collect(Collectors.toList());
     }
 }

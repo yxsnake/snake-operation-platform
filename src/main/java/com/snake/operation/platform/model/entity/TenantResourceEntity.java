@@ -1,5 +1,7 @@
 package com.snake.operation.platform.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +19,7 @@ import lombok.experimental.Accessors;
 @TableName("p_tenant_resource")
 public class TenantResourceEntity {
 
+    @TableId(type = IdType.NONE)
     private String id;
 
     private String tenantId;

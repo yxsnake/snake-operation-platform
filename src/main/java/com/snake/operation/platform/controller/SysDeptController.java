@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "运营平台部门")
 @Slf4j
 @RestController
@@ -46,7 +48,7 @@ public class SysDeptController extends BaseController {
 
     @Operation(summary = "查询部门树")
     @GetMapping(value = "/tree-list")
-    public ResponseEntity<Result<SysDeptTreeDTO>> treeList(){
+    public ResponseEntity<Result<List<SysDeptTreeDTO>>> treeList(){
         return success(sysDeptService.treeList());
     }
 }
