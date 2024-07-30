@@ -87,6 +87,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public List<SysDeptDetailDTO> listAll() {
         List<SysDept> list = this.lambdaQuery()
+                .orderByDesc(SysDept::getCreateTime)
                 .list();
         if(CollUtil.isEmpty(list)){
             return Lists.newArrayList();
