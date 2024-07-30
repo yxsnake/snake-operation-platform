@@ -30,7 +30,7 @@ import java.util.List;
 @Tag(name = "菜单相关API")
 @Slf4j
 @RestController
-@RequestMapping(value = "/menu",consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/menu",produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class MenuController extends BaseController {
 

@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "模块相关API")
 @Slf4j
 @RestController
-@RequestMapping(value = "/module",consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/module",produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class ModuleController extends BaseController {
 

@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "租户相关API")
 @Slf4j
 @RestController
-@RequestMapping(value = "/tenant",consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/tenant",produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class TenantController extends BaseController {
 

@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "产品相关API")
 @Slf4j
 @RestController
-@RequestMapping(value = "/product",consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/product",produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class ProductController extends BaseController {
 

@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "运营平台系统角色")
 @Slf4j
 @RestController
-@RequestMapping(value = "/sys-role",consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/sys-role",produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class SysRoleController extends BaseController {
 

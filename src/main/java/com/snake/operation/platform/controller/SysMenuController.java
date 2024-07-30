@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "运营平台系统菜单")
 @Slf4j
 @RestController
-@RequestMapping(value = "/sys-menu",consumes = MediaType.APPLICATION_JSON_VALUE,produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/sys-menu",produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class SysMenuController {
 
