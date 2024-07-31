@@ -1,5 +1,6 @@
 package com.snake.operation.platform.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 public class SysDeptDTO {
 
     @Schema(description = "部门ID")
+    @JsonProperty("id")
     private String deptId;
 
     @Schema(description = "上级部门ID")
