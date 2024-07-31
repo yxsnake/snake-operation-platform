@@ -33,6 +33,9 @@ public class SysDeptDetailDTO {
     @Schema(description = "部门状态(0-正常，1-禁用)")
     private Integer status;
 
+    @Schema(description = "排序")
+    private Long rank;
+
     @Schema(description = "备注")
     private String remark;
 
