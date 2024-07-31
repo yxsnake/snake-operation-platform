@@ -28,6 +28,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(SysDeptForm form) {
+        // 校验是否已存在
         // 查询 【部门名称】是否已存在
         long count = this.lambdaQuery().eq(SysDept::getDeptName, form.getDeptName()).list().stream().count();
         BizAssert.isTrue("部门名称已存在",count > 0);
@@ -42,6 +43,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             SysDept parent = this.lambdaQuery().eq(SysDept::getDeptId, parentId).list().stream().findFirst().orElse(null);
             BizAssert.isTrue("上级部门不存在", Objects.isNull(parent));
             BizAssert.isTrue("上级部门已禁用,不允许添加", DisabledEnum.DISABLE.getValue().equals(parent.getStatus()));
+        }else{
+            // 校验是否已存在顶级部门
+            long size = this.lambdaQuery().eq(SysDept::getParentId, SysDept.ROOT).list().stream().count();
+            BizAssert.isTrue("已存在顶级部门,不允许创建多个顶级部门",size > 0);
         }
         sysDept.setParentId(parentId);
         DisabledEnum disabledEnum = DisabledEnum.getInstance(form.getStatus());
