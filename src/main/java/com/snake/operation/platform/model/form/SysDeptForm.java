@@ -1,5 +1,6 @@
 package com.snake.operation.platform.model.form;
 
+
 import io.github.yxsnake.pisces.web.core.converter.Convert;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

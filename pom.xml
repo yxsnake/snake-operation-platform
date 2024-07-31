@@ -20,7 +20,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.snake.operation.platform.OperationPlatformApplication</start-class>
-        <pisces.version>1.0.2</pisces.version>
+        <pisces.version>1.0.3</pisces.version>
     </properties>
 
     <dependencies>

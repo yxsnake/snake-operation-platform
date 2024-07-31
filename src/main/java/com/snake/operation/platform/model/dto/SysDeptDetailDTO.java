@@ -28,6 +28,10 @@ public class SysDeptDetailDTO {
     @Schema(description = "负责人邮箱")
     private String email;
 
+    @Schema(description = "部门状态(0-正常，1-禁用)")
     private Integer status;
+
+    @Schema(description = "备注")
+    private String remark;
 
 }
