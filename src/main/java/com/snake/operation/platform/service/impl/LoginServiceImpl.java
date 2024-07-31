@@ -42,6 +42,7 @@ public class LoginServiceImpl implements LoginService {
         BizAssert.isTrue("账号已停用", SysUserStatusEnum.DISABLE.getValue().equals(sysUser.getStatus()));
         BizAssert.isTrue("密码错误",!sysUser.getPassword().equals(form.getPassword()));
         String userId = sysUser.getUserId();
+        StpUtil.logout(userId);
         StpUtil.login(userId);
         String token = StpUtil.getTokenValue();
         LoginDTO loginDTO = LoginDTO.builder()
