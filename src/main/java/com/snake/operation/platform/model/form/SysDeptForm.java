@@ -37,6 +37,9 @@ public class SysDeptForm implements Convert, Serializable {
     @Schema(description = "备注")
     private String remark;
 
+    @Schema(description = "状态")
+    private Integer status;
+
     public interface Create{}
 
     public interface Modify{}

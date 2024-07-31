@@ -46,7 +46,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             BizAssert.isTrue("上级部门已禁用,不允许添加", DisabledEnum.DISABLE.getValue().equals(parent.getStatus()));
         }
         sysDept.setParentId(parentId);
-        sysDept.setStatus(DisabledEnum.NORMAL.getValue());
+        DisabledEnum disabledEnum = DisabledEnum.getInstance(form.getStatus());
+        BizAssert.isTrue("状态不能为空",Objects.isNull(disabledEnum));
+        sysDept.setStatus(disabledEnum.getValue());
         sysDept.setCreateTime(DateUtil.date());
         if(Objects.isNull(sysDept.getRank())){
             sysDept.setRank(DateUtil.date().getTime());
