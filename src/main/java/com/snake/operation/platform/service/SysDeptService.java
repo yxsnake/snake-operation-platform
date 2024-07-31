@@ -2,7 +2,6 @@ package com.snake.operation.platform.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.snake.operation.platform.model.dto.SysDeptDTO;
-import com.snake.operation.platform.model.dto.SysDeptDetailDTO;
 import com.snake.operation.platform.model.entity.SysDept;
 import com.snake.operation.platform.model.form.SysDeptForm;
 
@@ -15,5 +14,5 @@ public interface SysDeptService extends IService<SysDept> {
 
     SysDeptDTO detail(String deptId);
 
-    List<SysDeptDetailDTO> listAll();
+    List<SysDeptDTO> listAll();
 }

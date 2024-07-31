@@ -1,7 +1,6 @@
 package com.snake.operation.platform.controller;
 
 import com.snake.operation.platform.model.dto.SysDeptDTO;
-import com.snake.operation.platform.model.dto.SysDeptDetailDTO;
 import com.snake.operation.platform.model.form.SysDeptForm;
 import com.snake.operation.platform.service.SysDeptService;
 import io.github.yxsnake.pisces.web.core.base.Result;
@@ -48,7 +47,7 @@ public class SysDeptController extends BaseController {
 
     @Operation(summary = "查询部门列表")
     @GetMapping(value = "/list-all")
-    public ResponseEntity<Result<List<SysDeptDetailDTO>>> listAll(){
+    public ResponseEntity<Result<List<SysDeptDTO>>> listAll(){
         return success(sysDeptService.listAll());
     }
 }

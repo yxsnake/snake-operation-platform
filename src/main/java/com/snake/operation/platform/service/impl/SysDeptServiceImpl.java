@@ -8,11 +8,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.snake.operation.platform.mapper.SysDeptMapper;
 import com.snake.operation.platform.model.dto.SysDeptDTO;
-import com.snake.operation.platform.model.dto.SysDeptDetailDTO;
 import com.snake.operation.platform.model.entity.SysDept;
 import com.snake.operation.platform.model.form.SysDeptForm;
 import com.snake.operation.platform.service.SysDeptService;
-import io.github.yxsnake.pisces.web.core.base.QueryFilter;
 import io.github.yxsnake.pisces.web.core.enums.DisabledEnum;
 import io.github.yxsnake.pisces.web.core.utils.BizAssert;
 import lombok.extern.slf4j.Slf4j;
@@ -87,7 +85,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
 
     @Override
-    public List<SysDeptDetailDTO> listAll() {
+    public List<SysDeptDTO> listAll() {
         List<SysDept> list = this.lambdaQuery()
                 .orderByDesc(SysDept::getCreateTime)
                 .list();
@@ -95,7 +93,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             return Lists.newArrayList();
         }
         return list.stream()
-                .map(item->item.convert(SysDeptDetailDTO.class))
+                .map(item->item.convert(SysDeptDTO.class))
                 .collect(Collectors.toList());
     }
 }
