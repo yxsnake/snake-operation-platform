@@ -74,10 +74,15 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             SysDept parent = this.getBaseMapper().selectById(parentId);
             BizAssert.isTrue("上级部门信息不存在",Objects.isNull(parent));
         }
-        BeanUtils.copyProperties(form,sysDept);
         sysDept.setDeptName(form.getName());
+        sysDept.setRemark(form.getRemark());
+        sysDept.setRank(form.getRank());
+        sysDept.setParentId(form.getParentId());
+        sysDept.setEmail(form.getEmail());
+        sysDept.setPhone(form.getPhone());
+        sysDept.setPersonInCharge(form.getPersonInCharge());
+        sysDept.setStatus(form.getStatus());
         sysDept.setUpdateTime(DateUtil.date());
-
         this.getBaseMapper().updateById(sysDept);
     }
 
