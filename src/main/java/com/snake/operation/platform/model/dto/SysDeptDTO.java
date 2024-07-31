@@ -18,6 +18,7 @@ public class SysDeptDTO {
     private String parentId;
 
     @Schema(description = "部门名称")
+    @JsonProperty("name")
     private String deptName;
 
     @Schema(description = "部门负责人")
