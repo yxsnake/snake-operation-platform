@@ -30,9 +30,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public void create(SysDeptForm form) {
         // 校验是否已存在
         // 查询 【部门名称】是否已存在
-        long count = this.lambdaQuery().eq(SysDept::getDeptName, form.getDeptName()).list().stream().count();
+        long count = this.lambdaQuery().eq(SysDept::getDeptName, form.getName()).list().stream().count();
         BizAssert.isTrue("部门名称已存在",count > 0);
         SysDept sysDept = form.convert(SysDept.class);
+        sysDept.setDeptName(form.getName());
         String deptId = IdWorker.getIdStr();
         sysDept.setDeptId(deptId);
         String parentId = form.getParentId();
@@ -74,6 +75,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             BizAssert.isTrue("上级部门信息不存在",Objects.isNull(parent));
         }
         BeanUtils.copyProperties(form,sysDept);
+        sysDept.setDeptName(form.getName());
         sysDept.setUpdateTime(DateUtil.date());
 
         this.getBaseMapper().updateById(sysDept);

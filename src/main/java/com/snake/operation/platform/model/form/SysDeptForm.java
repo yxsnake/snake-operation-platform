@@ -21,7 +21,7 @@ public class SysDeptForm implements Convert, Serializable {
 
     @Schema(description = "部门名称")
     @NotBlank(message = "部门名称不能为空",groups = {Create.class,Modify.class})
-    private String deptName;
+    private String name;
 
     @Schema(description = "部门负责人")
     private String personInCharge;
