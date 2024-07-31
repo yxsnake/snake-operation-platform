@@ -50,4 +50,11 @@ public class SysDeptController extends BaseController {
     public ResponseEntity<Result<List<SysDeptDTO>>> listAll(){
         return success(sysDeptService.listAll());
     }
+
+    @Operation(summary = "删除部门")
+    @GetMapping(value = "/remove")
+    public ResponseEntity<Result<Boolean>> removeById(@RequestParam("deptId") String deptId){
+        sysDeptService.removeByDeptId(deptId);
+        return success(Boolean.TRUE);
+    }
 }

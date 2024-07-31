@@ -96,4 +96,13 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .map(item->item.convert(SysDeptDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void removeByDeptId(String deptId) {
+        // 校验当前部门是否有子级部门
+        long count = this.lambdaQuery().eq(SysDept::getParentId, deptId).list().stream().count();
+        BizAssert.isTrue("当前部门存在子级部门，不允许删除",count > 0);
+        this.getBaseMapper().deleteById(deptId);
+    }
 }

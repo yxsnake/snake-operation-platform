@@ -15,4 +15,6 @@ public interface SysDeptService extends IService<SysDept> {
     SysDeptDTO detail(String deptId);
 
     List<SysDeptDTO> listAll();
+
+    void removeByDeptId(String deptId);
 }
