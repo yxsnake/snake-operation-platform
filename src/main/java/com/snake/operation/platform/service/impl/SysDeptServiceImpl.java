@@ -64,7 +64,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Transactional(rollbackFor = Exception.class)
     public void modify(SysDeptForm form) {
         // 查询当前部门是否存在
-        SysDept sysDept = this.getBaseMapper().selectById(form.getDeptId());
+        SysDept sysDept = this.getBaseMapper().selectById(form.getId());
         BizAssert.isTrue("部门信息不存在",Objects.isNull(sysDept));
 
         String parentId = form.getParentId();

@@ -14,7 +14,7 @@ public class SysDeptForm implements Convert, Serializable {
 
     @Schema(description = "部门ID")
     @NotBlank(message = "部门ID不能为空",groups = {Modify.class})
-    private String deptId;
+    private String id;
 
     @Schema(description = "上级部门ID")
     private String parentId;
